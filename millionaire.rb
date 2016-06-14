@@ -1,6 +1,10 @@
 class Millionaire 
 
-  @player = ''
+  def initialize()
+    @player = ''
+    @current_question = 0
+    @continue = true
+  end  
 
   def title_screen()
     clear()
@@ -44,30 +48,43 @@ class Millionaire
   def instructions()
     title_screen()
     puts "These are the instructions"
-    back_to_menu = get_input("\nPress enter when you are done reading...")
-    menu() if back_to_menu == ''
+    back_to_menu = get_user_input("\nPress enter when you are done reading...")
+      menu() if defined?(back_to_menu) 
   end  
-
-  def start_game()
-  end
 
   def menu()
     title_screen
-    user_choice = get_user_input("#{@player}, what would you like to do?:\n 1 - Start Game \t 2 - Read Instructions")
+    user_choice = get_user_input("#{@player}, what would you like to do?\n 1 - Start Game \t 2 - Read Instructions")
       if (user_choice  == '1')
         start_game()
       elsif (user_choice  == '2')
         instructions()
       else
         title_screen
-        puts "\nInvalid input, Please answer 1 to Start Game or 2 to Read Instructions"
+        puts "\nInvalid Response!, Please answer 1 to Start Game or 2 to Read Instructions"
+        sleep(1)
         menu()
       end
+  end
+  
+  def present_question()
+    puts "Question is presented"
+    @current_question += 1
+  end
+  
+  def game_sequence()
+    while (@continue && @current_question <= 3) do
+      present_question()
+    end      
+  end
+  
+  def start_game()
+    game_sequence()    
   end
 
   def play()
     get_player_name()
-    menu() 
+    menu()
   end
 
 end
